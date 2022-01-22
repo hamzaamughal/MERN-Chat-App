@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const colors = require('colors');
+const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
@@ -9,13 +10,14 @@ const app = express();
 dotenv.config();
 connectDB();
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.use('/api/users', userRoutes);
+app.use('/api/user', userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
